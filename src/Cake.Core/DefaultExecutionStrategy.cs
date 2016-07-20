@@ -46,7 +46,8 @@ namespace Cake.Core
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="context">The context.</param>
-        public void PerformTeardown(Action<ICakeContext> action, ICakeContext context)
+        /// <param name="buildContext">The build context.</param>
+        public void PerformTeardown(Action<ICakeContext, ITeardownContext> action, ICakeContext context, ITeardownContext buildContext)
         {
             if (action != null)
             {
@@ -56,7 +57,7 @@ namespace Cake.Core
                 _log.Information("----------------------------------------");
                 _log.Verbose("Executing custom teardown action...");
 
-                action(context);
+                action(context, buildContext);
             }
         }
 

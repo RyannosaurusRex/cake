@@ -19,7 +19,7 @@ namespace Cake.Core
         private readonly ICakeLog _log;
         private readonly List<CakeTask> _tasks;
         private Action<ICakeContext> _setupAction;
-        private Action<ICakeContext> _teardownAction;
+        private Action<ICakeContext, ITeardownContext> _teardownAction;
         private Action<ICakeContext, ITaskSetupContext> _taskSetupAction;
         private Action<ICakeContext, ITaskTeardownContext> _taskTeardownAction;
 
@@ -80,7 +80,7 @@ namespace Cake.Core
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
-        public void RegisterTeardownAction(Action<ICakeContext> action)
+        public void RegisterTeardownAction(Action<ICakeContext, ITeardownContext> action)
         {
             _teardownAction = action;
         }
@@ -356,7 +356,8 @@ namespace Cake.Core
             {
                 try
                 {
-                    strategy.PerformTeardown(_teardownAction, context);
+                    var teardownContext = new TeardownContext(!exceptionWasThrown);
+                    strategy.PerformTeardown(_teardownAction, context, teardownContext);
                 }
                 catch (Exception ex)
                 {

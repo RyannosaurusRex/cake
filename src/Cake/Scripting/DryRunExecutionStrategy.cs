@@ -26,7 +26,7 @@ namespace Cake.Scripting
         {
         }
 
-        public void PerformTeardown(Action<ICakeContext> action, ICakeContext context)
+        public void PerformTeardown(Action<ICakeContext, ITeardownContext> action, ICakeContext context, ITeardownContext buildContext)
         {
         }
 

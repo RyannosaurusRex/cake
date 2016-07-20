@@ -22,7 +22,8 @@ namespace Cake.Core
         /// </summary>
         /// <param name="action">The action.</param>
         /// <param name="context">The context.</param>
-        void PerformTeardown(Action<ICakeContext> action, ICakeContext context);
+        /// <param name="buildContext">The build context.</param>
+        void PerformTeardown(Action<ICakeContext, ITeardownContext> action, ICakeContext context, ITeardownContext buildContext);
 
         /// <summary>
         /// Executes the specified task.

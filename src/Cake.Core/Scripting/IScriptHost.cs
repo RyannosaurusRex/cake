@@ -50,7 +50,7 @@ namespace Cake.Core.Scripting
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
-        [Obsolete("Please use Teardown(Action<ICakeContext>) instead.", false)]
+        [Obsolete("Please use Teardown(Action<ICakeContext, ITeardownContext>) instead.", false)]
         void Teardown(Action action);
 
         /// <summary>
@@ -58,7 +58,15 @@ namespace Cake.Core.Scripting
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
+        [Obsolete("Please use Teardown(Action<ICakeContext, ITeardownContext>) instead.", false)]
         void Teardown(Action<ICakeContext> action);
+
+        /// <summary>
+        /// Allows registration of an action that's executed after all other tasks have been run.
+        /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
+        /// </summary>
+        /// <param name="action">The action to be executed.</param>
+        void Teardown(Action<ICakeContext, ITeardownContext> action);
 
         /// <summary>
         /// Allows registration of an action that's executed before each task is run.

@@ -410,7 +410,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
 
                 engine.RegisterSetupAction(context => result.Add("Setup"));
-                engine.RegisterTeardownAction(context => result.Add("Teardown"));
+                engine.RegisterTeardownAction((cc, bc) => result.Add("Teardown"));
                 engine.RegisterTask("A").Does(() => result.Add("A"));
 
                 // When
@@ -429,7 +429,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
 
                 engine.RegisterSetupAction(context => { });
-                engine.RegisterTeardownAction(context => { });
+                engine.RegisterTeardownAction((cc, bc) => { });
                 engine.RegisterTask("A").Does(() => { throw new InvalidOperationException("Fail"); });
 
                 // When
@@ -451,7 +451,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
 
                 engine.RegisterSetupAction(context => { throw new InvalidOperationException("Fail"); });
-                engine.RegisterTeardownAction(context => { });
+                engine.RegisterTeardownAction((cc, bc) => { });
                 engine.RegisterTask("A").Does(() => { });
 
                 // When
@@ -473,7 +473,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
 
                 engine.RegisterSetupAction(context => { throw new InvalidOperationException("Setup"); });
-                engine.RegisterTeardownAction(context => { throw new InvalidOperationException("Teardown"); });
+                engine.RegisterTeardownAction((cc, bc) => { throw new InvalidOperationException("Teardown"); });
                 engine.RegisterTask("A").Does(() => { });
 
                 // When
@@ -494,7 +494,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
                 var expected = new InvalidOperationException("Teardown");
 
-                engine.RegisterTeardownAction(context => { throw expected; });
+                engine.RegisterTeardownAction((cc, bc) => { throw expected; });
                 engine.RegisterTask("A").Does(() => { });
 
                 // When
@@ -513,7 +513,7 @@ namespace Cake.Core.Tests.Unit
                 var engine = fixture.CreateEngine();
 
                 engine.RegisterSetupAction(context => { throw new InvalidOperationException("Setup"); });
-                engine.RegisterTeardownAction(context => { throw new InvalidOperationException("Teardown"); });
+                engine.RegisterTeardownAction((cc, bc) => { throw new InvalidOperationException("Teardown"); });
                 engine.RegisterTask("A").Does(() => { });
 
                 // When
@@ -531,7 +531,7 @@ namespace Cake.Core.Tests.Unit
                 var fixture = new CakeEngineFixture();
                 var engine = fixture.CreateEngine();
 
-                engine.RegisterTeardownAction(context => { throw new InvalidOperationException("Teardown"); });
+                engine.RegisterTeardownAction((cc, bc) => { throw new InvalidOperationException("Teardown"); });
                 engine.RegisterTask("A").Does(context => { throw new InvalidOperationException("Task"); });
 
                 // When
@@ -551,7 +551,7 @@ namespace Cake.Core.Tests.Unit
                 var fixture = new CakeEngineFixture();
                 var engine = fixture.CreateEngine();
 
-                engine.RegisterTeardownAction(context => { throw new InvalidOperationException("Teardown"); });
+                engine.RegisterTeardownAction((cc, bc) => { throw new InvalidOperationException("Teardown"); });
                 engine.RegisterTask("A").Does(() => { throw new InvalidOperationException("Task"); });
 
                 // When

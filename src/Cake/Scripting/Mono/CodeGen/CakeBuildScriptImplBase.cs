@@ -73,7 +73,7 @@ namespace Cake.Scripting.Mono.CodeGen
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
-        [Obsolete("Please use Teardown(Action<ICakeContext>) instead.", false)]
+        [Obsolete("Please use Teardown(Action<ICakeContext, ITeardownContext>) instead.", false)]
         public void Teardown(Action action)
         {
             ScriptHost.Teardown(context => action());
@@ -84,7 +84,18 @@ namespace Cake.Scripting.Mono.CodeGen
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
+        [Obsolete("Please use Teardown(Action<ICakeContext, ITeardownContext>) instead.", false)]
         public void Teardown(Action<ICakeContext> action)
+        {
+            ScriptHost.Teardown((context, build) => action(context));
+        }
+
+        /// <summary>
+        /// Allows registration of an action that's executed after all other tasks have been run.
+        /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
+        /// </summary>
+        /// <param name="action">The action to be executed.</param>
+        public void Teardown(Action<ICakeContext, ITeardownContext> action)
         {
             ScriptHost.Teardown(action);
         }

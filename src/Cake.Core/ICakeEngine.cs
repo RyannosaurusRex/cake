@@ -36,7 +36,7 @@ namespace Cake.Core
         /// If a setup action or a task fails with or without recovery, the specified teardown action will still be executed.
         /// </summary>
         /// <param name="action">The action to be executed.</param>
-        void RegisterTeardownAction(Action<ICakeContext> action);
+        void RegisterTeardownAction(Action<ICakeContext, ITeardownContext> action);
 
         /// <summary>
         /// Runs the specified target using the specified <see cref="IExecutionStrategy"/>.
